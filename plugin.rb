@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 # name: discourse-category-lockdown
 # about: Set all topics in a category to redirect, unless part of a specified group
-# version: 1.2.1
+# version: 1.2.2
 # authors: Pavilion
 # meta_topic_id: 70649
 # url: https://github.com/paviliondev/discourse-category-lockdown
 
 enabled_site_setting :category_lockdown_enabled
-register_asset "stylesheets/lockdown.scss"
 
 module ::CategoryLockdown
   PLUGIN_NAME = "category-lockdown"
