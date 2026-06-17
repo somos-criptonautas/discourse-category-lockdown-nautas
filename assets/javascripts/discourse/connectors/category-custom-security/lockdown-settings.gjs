@@ -12,7 +12,7 @@ export default class LockdownSettings extends Component {
 
   constructor() {
     super(...arguments);
-    this.lockdownEnabled = ["true", "t", true].includes(
+    this.lockdownEnabled = [true, "true"].includes(
       this.args.outletArgs.category?.custom_fields?.lockdown_enabled
     );
   }
@@ -46,7 +46,7 @@ export default class LockdownSettings extends Component {
   <template>
     <@outletArgs.form.Section
       @title={{i18n "lockdown.category_setting_heading"}}
-      class="category-custom-security-outlet lockdown-settings"
+      class="lockdown-settings"
     >
       <@outletArgs.form.Object @name="custom_fields" as |object|>
         <object.Field
