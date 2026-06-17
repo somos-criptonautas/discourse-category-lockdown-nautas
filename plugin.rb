@@ -7,7 +7,6 @@
 # url: https://github.com/paviliondev/discourse-category-lockdown
 
 enabled_site_setting :category_lockdown_enabled
-register_asset "stylesheets/lockdown.scss"
 
 module ::CategoryLockdown
   PLUGIN_NAME = "category-lockdown"
