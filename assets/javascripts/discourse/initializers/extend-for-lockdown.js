@@ -1,7 +1,7 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { default as DiscourseURL } from "discourse/lib/url";
 
-const PLUGIN_ID = "discourse-category-lockdown";
+const PLUGIN_ID = "discourse-category-lockdown-nautas";
 
 function initializeLockdown(api) {
   // Intercept any HTTP 402 (Payment Required) responses for topics

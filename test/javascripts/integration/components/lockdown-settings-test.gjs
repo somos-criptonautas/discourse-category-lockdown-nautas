@@ -3,7 +3,7 @@ import { click, render } from "@ember/test-helpers";
 import { module, test } from "qunit";
 import Form from "discourse/components/form";
 import { setupRenderingTest } from "discourse/tests/helpers/component-test";
-import LockdownSettings from "discourse/plugins/discourse-category-lockdown/discourse/connectors/category-custom-security/lockdown-settings";
+import LockdownSettings from "discourse/plugins/discourse-category-lockdown-nautas/discourse/connectors/category-custom-security/lockdown-settings";
 
 module(
   "Discourse Category Lockdown | Integration | Component | lockdown-settings",
