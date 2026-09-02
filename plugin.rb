@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # name: discourse-category-lockdown
 # about: Set all topics in a category to redirect, unless part of a specified group
-# version: 1.2.2
+# version: 1.3.0
 # authors: Pavilion
 # meta_topic_id: 70649
 # url: https://github.com/paviliondev/discourse-category-lockdown
@@ -23,14 +23,23 @@ after_initialize do
     opts = { include_ember: true }
     topic_id = params["topic_id"] || params["id"]
     topic_id ||= params["topic"] # if coming from discourse-docs plugin
-    topic = Topic.find(topic_id.to_i) if topic_id
-    response = { error: "Payment Required" }
-    response[:redirect_url] = topic.category.custom_fields["redirect_url"] if topic
-    response[:redirect_url] ||= SiteSetting.category_lockdown_redirect_url
+    topic = Topic.find_by(id: topic_id.to_i) if topic_id
+
+    redirect_target =
+      if topic&.category && guardian.can_see_category?(topic.category)
+        about = topic.category.topic
+        if about && guardian.can_see_topic?(about)
+          about.relative_url
+        else
+          topic.category.url
+        end
+      end
+    redirect_target ||= path("/")
+
     if request.format.json?
-      render_json_dump(response, status: 402)
+      render_json_dump({ error: "Payment Required", redirect_url: redirect_target }, status: 402)
     else
-      redirect_to path(response[:redirect_url]), allow_other_host: true
+      redirect_to redirect_target
     end
   end
 
@@ -38,19 +47,8 @@ after_initialize do
   ::TopicView.prepend ::CategoryLockdown::TopicViewExtension
   ::Guardian.prepend ::CategoryLockdown::PostGuardianExtension
 
-  register_category_custom_field_type("redirect_url", :string)
-  Site.preloaded_category_custom_fields << "redirect_url"
-  if defined?(register_category_list_preloaded_category_custom_fields)
-    register_category_list_preloaded_category_custom_fields("redirect_url")
-  end
   ::TopicList.preloaded_custom_fields << "lockdown_enabled"
   ::TopicList.preloaded_custom_fields << "lockdown_allowed_groups"
-
-  add_to_serializer(
-    :basic_category,
-    :redirect_url,
-    include_condition: -> { SiteSetting.category_lockdown_enabled },
-  ) { object.custom_fields["redirect_url"] }
 
   add_to_serializer(
     :topic_list_item,

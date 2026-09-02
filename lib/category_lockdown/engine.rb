@@ -9,6 +9,10 @@ module ::CategoryLockdown
   def self.is_locked(guardian, topic)
     return false if guardian.is_admin?
 
+    # The category's About topic holds the description visitors are
+    # redirected to, so it must stay viewable (otherwise the redirect loops).
+    return false if topic&.category&.topic_id == topic&.id
+
     locked_down = ["true", "t", true].include?(
       topic.category&.custom_fields&.[]("lockdown_enabled"),
     )

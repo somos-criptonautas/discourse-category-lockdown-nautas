@@ -62,15 +62,6 @@ export default class LockdownSettings extends Component {
 
         {{#if this.lockdownEnabled}}
           <object.Field
-            @name="redirect_url"
-            @title={{i18n "lockdown.redirect_url"}}
-            @type="input"
-            as |field|
-          >
-            <field.Control />
-          </object.Field>
-
-          <object.Field
             @name="lockdown_allowed_groups"
             @title={{i18n "lockdown.lockdown_allowed_groups"}}
             @type="custom"

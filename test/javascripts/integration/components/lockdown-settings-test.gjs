@@ -23,18 +23,14 @@ module(
       assert.dom(".lockdown-settings").includesText("Category Lockdown");
       assert.dom("input[type=checkbox]").isNotChecked();
       assert
-        .dom(".lockdown-settings input[type=text]")
-        .doesNotExist("hides the redirect url field");
-      assert
         .dom(".group-chooser")
         .doesNotExist("hides the allowed groups chooser");
     });
 
-    test("reveals the redirect settings when lockdown is enabled", async function (assert) {
+    test("reveals the allowed groups chooser when lockdown is enabled", async function (assert) {
       const data = {
         custom_fields: {
           lockdown_enabled: true,
-          redirect_url: "https://example.com",
           lockdown_allowed_groups: "",
         },
       };
@@ -47,9 +43,6 @@ module(
       </template>);
 
       assert.dom("input[type=checkbox]").isChecked();
-      assert
-        .dom(".lockdown-settings input[type=text]")
-        .hasValue("https://example.com", "shows the stored redirect url");
       assert.dom(".group-chooser").exists("renders the allowed groups chooser");
     });
 

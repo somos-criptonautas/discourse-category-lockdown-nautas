@@ -32,17 +32,17 @@ RSpec.describe "CategoryLockdown", type: :request do
 
     it "doesn't allow public access to the topic url" do
       get "/t/#{topic.slug}/#{topic.id}"
-      expect(response).to redirect_to("#{Discourse.base_url}/")
+      expect(response).to redirect_to(category.url)
     end
 
     it "doesn't allow public access to the print url" do
       get "/t/#{topic.slug}/#{topic.id}/print"
-      expect(response).to redirect_to("#{Discourse.base_url}/")
+      expect(response).to redirect_to(category.url)
     end
 
     it "doesn't allow public access to the rss url" do
       get "/t/#{topic.slug}/#{topic.id}.rss"
-      expect(response).to redirect_to("#{Discourse.base_url}/")
+      expect(response).to redirect_to(category.url)
     end
 
     it "doesn't allow public access to the raw url" do
@@ -53,7 +53,7 @@ RSpec.describe "CategoryLockdown", type: :request do
     it "doesn't allow any user access" do
       sign_in(user)
       get "/t/#{topic.slug}/#{topic.id}"
-      expect(response).to redirect_to("#{Discourse.base_url}/")
+      expect(response).to redirect_to(category.url)
     end
 
     it "allows admins access" do
@@ -68,22 +68,24 @@ RSpec.describe "CategoryLockdown", type: :request do
       expect(response.code).to eq("200")
     end
 
-    context "with a redirect url" do
-      before do
-        category.custom_fields["redirect_url"] = "https://google.com"
-        category.save_custom_fields(true)
+    context "with a category description topic" do
+      let(:category) { Fabricate(:category_with_definition) }
+
+      it "redirects to the description topic" do
+        get "/t/#{topic.slug}/#{topic.id}"
+        expect(response).to redirect_to(category.topic.relative_url)
       end
 
-      it "redirects to an external url" do
-        get "/t/#{topic.slug}/#{topic.id}"
-        expect(response).to redirect_to("https://google.com")
+      it "keeps the description topic itself accessible" do
+        get "/t/#{category.topic.slug}/#{category.topic.id}"
+        expect(response.code).to eq("200")
       end
     end
 
     context "with a crawler request" do
       it "doesn't allow access" do
         get "/t/#{topic.slug}/#{topic.id}", headers: { "HTTP_USER_AGENT" => "Googlebot" }
-        expect(response).to redirect_to("#{Discourse.base_url}/")
+        expect(response).to redirect_to(category.url)
       end
 
       context "with category_lockdown_allow_crawlers enabled" do

@@ -4,3 +4,4 @@ ru:
       lockdown_enabled: "Перенаправлять просмотр темы на другой URL-адрес, кроме разрешенных групп?"
       lockdown_allowed_groups: "Группы, которым разрешено просматривать темы без перенаправления"
       topic_is_locked_down: "Эта тема доступна только членам определенных групп"
+      category_setting_heading: "Category Lockdown"
