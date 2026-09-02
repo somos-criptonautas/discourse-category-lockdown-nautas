@@ -1,8 +1,8 @@
+# frozen_string_literal: true
 require "request_store"
 
 class CategoryLockdown::CrawlerHtmlBuilder
-  attr_accessor :controller,
-                :topic
+  attr_accessor :controller, :topic
 
   def self.perform(controller)
     builder = self.new(controller)
@@ -14,13 +14,13 @@ class CategoryLockdown::CrawlerHtmlBuilder
   end
 
   def should_inject_html?
-    return false unless controller.instance_of?(::TopicsController) &&
-      SiteSetting.category_lockdown_enabled &&
-      SiteSetting.category_lockdown_allow_crawlers &&
-      ::RequestStore.store[:is_crawler]
+    unless controller.instance_of?(::TopicsController) && SiteSetting.category_lockdown_enabled &&
+             SiteSetting.category_lockdown_allow_crawlers && ::RequestStore.store[:is_crawler]
+      return false
+    end
 
     @topic = controller.instance_variable_get(:@topic_view)&.topic
-    return false unless topic.present?
+    return false if topic.blank?
 
     CategoryLockdown.is_locked(controller.guardian, topic)
   end
