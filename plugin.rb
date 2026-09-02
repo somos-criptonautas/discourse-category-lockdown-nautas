@@ -1,10 +1,9 @@
 # frozen_string_literal: true
-# name: discourse-category-lockdown
-# about: Set all topics in a category to redirect, unless part of a specified group
+# name: discourse-category-lockdown-nautas
+# about: Restrict a category to specified groups, redirecting everyone else to the category description topic
 # version: 1.3.0
-# authors: Pavilion
-# meta_topic_id: 70649
-# url: https://github.com/paviliondev/discourse-category-lockdown
+# authors: Pavilion, Criptonautas
+# url: https://github.com/somos-criptonautas/discourse-category-lockdown-nautas
 
 enabled_site_setting :category_lockdown_enabled
 

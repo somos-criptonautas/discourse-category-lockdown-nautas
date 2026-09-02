@@ -1,4 +1,4 @@
-# discourse-category-lockdown
+# discourse-category-lockdown-nautas
 
 Lock down every topic in a category so that only members of specified groups can read
 them. Everyone else is redirected to the category's own description topic.
