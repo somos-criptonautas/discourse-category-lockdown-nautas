@@ -30,6 +30,23 @@ module ::CategoryLockdown
     ["true", "t", true].include?(category&.custom_fields&.[](name))
   end
 
+  def self.whisper_replies?(category)
+    return false if !SiteSetting.category_lockdown_enabled
+    boolean_custom_field(category, "lockdown_whisper_replies")
+  end
+
+  # Called while the post is still unsaved, so post_number is not assigned yet.
+  # The topic's own first post is the one with nothing above it.
+  def self.whisper_reply?(post)
+    return false if post.post_type != Post.types[:regular]
+
+    topic = post.topic
+    return false if topic.blank? || topic.private_message?
+    return false if topic.highest_post_number.to_i < 1
+
+    whisper_replies?(topic.category)
+  end
+
   class NoAccessLocked < StandardError
   end
 end
