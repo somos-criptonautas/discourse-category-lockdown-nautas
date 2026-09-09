@@ -39,6 +39,11 @@ export default class LockdownSettings extends Component {
   }
 
   @action
+  async onToggleWhisperReplies(value, { set, name }) {
+    await set(name, value || "");
+  }
+
+  @action
   onChangeGroups(field, values) {
     field.set(values.join(","));
   }
@@ -79,6 +84,18 @@ export default class LockdownSettings extends Component {
             </field.Control>
           </object.Field>
         {{/if}}
+
+        <object.Field
+          @name="lockdown_whisper_replies"
+          @title={{i18n "lockdown.lockdown_whisper_replies"}}
+          @description={{i18n "lockdown.lockdown_whisper_replies_help"}}
+          @type="checkbox"
+          @format="full"
+          @onSet={{this.onToggleWhisperReplies}}
+          as |field|
+        >
+          <field.Control />
+        </object.Field>
       </@outletArgs.form.Object>
     </@outletArgs.form.Section>
   </template>

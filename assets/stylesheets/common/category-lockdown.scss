@@ -1,0 +1,17 @@
+// Every reply in a "keep replies private" category is a whisper, so core's
+// whisper treatment (an indicator plus italic muted body text) would mark the
+// entire discussion rather than distinguishing anything within it. Neutralise
+// it so replies read as ordinary posts.
+//
+// This is global: it assumes whispers are not also used for moderation notes.
+// If that changes, scope these rules to the relevant categories instead.
+.topic-post.whisper {
+  .post-info.whisper {
+    display: none;
+  }
+
+  .topic-body .cooked {
+    font-style: normal;
+    color: var(--primary);
+  }
+}

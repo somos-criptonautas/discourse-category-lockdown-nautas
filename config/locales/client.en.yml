@@ -5,3 +5,5 @@ en:
       lockdown_allowed_groups: "Members of these groups are allowed to view topics without redirection"
       topic_is_locked_down: "This topic is only available to members of certain groups"
       category_setting_heading: "Category Lockdown"
+      lockdown_whisper_replies: "Keep replies private"
+      lockdown_whisper_replies_help: "The first post of each topic stays public. Replies are created as whispers, readable only by members of the groups in the 'whispers allowed groups' site setting."

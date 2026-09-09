@@ -7,6 +7,8 @@
 
 enabled_site_setting :category_lockdown_enabled
 
+register_asset "stylesheets/common/category-lockdown.scss"
+
 module ::CategoryLockdown
   PLUGIN_NAME = "category-lockdown"
 end
@@ -45,6 +47,11 @@ after_initialize do
   ::TopicsController.prepend ::CategoryLockdown::TopicsControllerExtension
   ::TopicView.prepend ::CategoryLockdown::TopicViewExtension
   ::Guardian.prepend ::CategoryLockdown::PostGuardianExtension
+  ::PostCreator.singleton_class.prepend ::CategoryLockdown::PostCreatorExtension
+  ::TopicListItemSerializer.prepend ::CategoryLockdown::WhisperCountSerializerExtension
+
+  register_category_custom_field_type("lockdown_whisper_replies", :boolean)
+  ::Site.preloaded_category_custom_fields << "lockdown_whisper_replies"
 
   ::TopicList.preloaded_custom_fields << "lockdown_enabled"
   ::TopicList.preloaded_custom_fields << "lockdown_allowed_groups"
