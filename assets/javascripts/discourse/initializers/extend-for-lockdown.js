@@ -31,6 +31,25 @@ function initializeLockdown(api) {
     }
   );
 
+  // Replies in these categories are whispers, so replying to one puts the
+  // composer into whisper mode: an eye-slash save icon and a "whisper" save
+  // label. Every one of those comes from isWhispering, and none of them mean
+  // anything here, where the whole discussion is whispered. This only changes
+  // how the composer presents itself - the post is still sent and stored as a
+  // whisper, by the composer model and by the server independently of it.
+  api.modifyClass(
+    "service:composer",
+    (Superclass) =>
+      class extends Superclass {
+        get isWhispering() {
+          if (this.model?.category?.lockdown_whisper_replies) {
+            return false;
+          }
+          return super.isWhispering;
+        }
+      }
+  );
+
   if (api.container.factoryFor("route:docs-index")) {
     api.modifyClass("route:docs-index", {
       pluginId: PLUGIN_ID,

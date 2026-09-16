@@ -53,6 +53,14 @@ after_initialize do
   register_category_custom_field_type("lockdown_whisper_replies", :boolean)
   ::Site.preloaded_category_custom_fields << "lockdown_whisper_replies"
 
+  # The composer mirrors the replied-to post's whisper state, so it needs to know
+  # which categories whisper by default in order to keep the reply UI ordinary.
+  add_to_serializer(
+    :basic_category,
+    :lockdown_whisper_replies,
+    include_condition: -> { SiteSetting.category_lockdown_enabled },
+  ) { ::CategoryLockdown.whisper_replies?(object) }
+
   ::TopicList.preloaded_custom_fields << "lockdown_enabled"
   ::TopicList.preloaded_custom_fields << "lockdown_allowed_groups"
 

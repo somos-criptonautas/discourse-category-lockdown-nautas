@@ -15,3 +15,9 @@
     color: var(--primary);
   }
 }
+
+// The nested reply view styles whispers separately from the flat post stream.
+.nested-post--whisper .nested-post__content .cooked {
+  font-style: normal;
+  color: var(--primary);
+}
