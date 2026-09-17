@@ -21,3 +21,25 @@
   font-style: normal;
   color: var(--primary);
 }
+
+.lockdown-hidden-replies {
+  margin: 1em 0;
+  padding: 1em 1.25em;
+  border: 1px solid var(--primary-low);
+  border-left: 4px solid var(--tertiary);
+  border-radius: var(--d-border-radius, 4px);
+  background: var(--primary-very-low);
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: 0;
+    color: var(--primary);
+  }
+
+  &__body {
+    margin: 0.5em 0 0;
+    color: var(--primary-high);
+  }
+}

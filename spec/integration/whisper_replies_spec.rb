@@ -70,6 +70,26 @@ RSpec.describe "CategoryLockdown whisper replies" do
       expect(as_subscriber.posts_count).to eq(3)
       expect(as_outsider.posts_count).to eq(1)
     end
+
+    it "tells visitors how many replies they are not being shown" do
+      2.times { reply_as(subscriber) }
+
+      as_outsider =
+        TopicViewSerializer.new(
+          TopicView.new(topic, outsider),
+          scope: Guardian.new(outsider),
+          root: false,
+        )
+      expect(as_outsider.lockdown_hidden_reply_count).to eq(2)
+
+      as_subscriber =
+        TopicViewSerializer.new(
+          TopicView.new(topic, subscriber),
+          scope: Guardian.new(subscriber),
+          root: false,
+        )
+      expect(as_subscriber.include_lockdown_hidden_reply_count?).to eq(false)
+    end
   end
 
   context "when the category does not have it enabled" do

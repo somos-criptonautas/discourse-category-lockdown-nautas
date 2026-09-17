@@ -69,4 +69,19 @@ after_initialize do
     :is_locked_down,
     include_condition: -> { SiteSetting.category_lockdown_enabled },
   ) { ::CategoryLockdown.is_locked(scope, object) }
+
+  # How many replies a visitor is not being shown. The count is not content, so
+  # revealing it is what makes the teaser worth reading; the bodies stay hidden.
+  # Only serialized to readers who cannot see the whispers, so it never has to be
+  # reconciled with what a subscriber already sees in the stream.
+  add_to_serializer(
+    :topic_view,
+    :lockdown_hidden_reply_count,
+    include_condition: -> do
+      SiteSetting.category_lockdown_enabled && !scope.user&.whisperer? &&
+        ::CategoryLockdown.whisper_replies?(object.topic&.category)
+    end,
+  ) do
+    ::Post.where(topic_id: object.topic.id, post_type: Post.types[:whisper], hidden: false).count
+  end
 end
