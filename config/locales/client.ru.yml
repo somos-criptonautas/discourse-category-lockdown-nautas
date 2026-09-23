@@ -1,7 +1,0 @@
-ru:
-  js:
-    lockdown:
-      lockdown_enabled: "Ограничить чтение указанными ниже группами. Остальные будут перенаправлены на тему с описанием категории."
-      lockdown_allowed_groups: "Участники этих групп могут читать темы в этой категории"
-      topic_is_locked_down: "Эта тема доступна только членам определенных групп"
-      category_setting_heading: "Category Lockdown"
