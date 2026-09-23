@@ -1,0 +1,18 @@
+es:
+  js:
+    lockdown:
+      lockdown_enabled: "Restringir la lectura a los grupos permitidos indicados abajo. El resto será redirigido al tema de descripción de la categoría."
+      lockdown_allowed_groups: "Los miembros de estos grupos pueden leer los temas de esta categoría"
+      topic_is_locked_down: "Este tema solo está disponible para miembros de ciertos grupos"
+      category_setting_heading: "Bloqueo de categoría"
+      hidden_replies:
+        title:
+          one: "%{count} respuesta que aún no puedes ver"
+          other: "%{count} respuestas que aún no puedes ver"
+        body: "La conversación de esta lección está abierta a los miembros. Únete para leer las preguntas y respuestas, y para hacer las tuyas."
+        participants:
+          zero: "%{names} están conversando sobre esta lección."
+          one: "%{names} y 1 persona más están conversando sobre esta lección."
+          other: "%{names} y %{count} personas más están conversando sobre esta lección."
+      lockdown_whisper_replies: "Mantener las respuestas privadas"
+      lockdown_whisper_replies_help: "La primera publicación de cada tema sigue siendo pública. Las respuestas se crean como susurros, legibles solo por los miembros de los grupos indicados en la configuración del sitio «grupos con permiso para susurrar»."

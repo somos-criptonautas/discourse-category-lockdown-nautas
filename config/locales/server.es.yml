@@ -1,0 +1,8 @@
+es:
+  site_settings:
+    category_lockdown_enabled: "¿Activar discourse-category-lockdown?"
+    category_lockdown_list_icon: "Nombre del fa-icon que se mostrará junto a los temas bloqueados."
+    category_lockdown_allow_crawlers: "Permitir que los rastreadores accedan al contenido bloqueado si «todos pueden ver» está activado. Los rastreadores se identifican únicamente por el User-Agent, que cualquiera puede enviar, así que por sí sola esta excepción es orientativa y no una restricción real."
+    category_lockdown_crawler_require_verified_ip: "Exigir además que las solicitudes de rastreadores provengan de un ASN incluido en la configuración del sitio «crawler asns». Cierra el bypass del User-Agent, pero ningún rastreador cumplirá el requisito hasta que «crawler asns» tenga valores."
+    category_lockdown_crawler_noarchive: "Añadir una metaetiqueta 'noarchive' para desactivar la caché de los buscadores."
+    category_lockdown_crawler_indicate_paywall: "Añadir metadatos de Schema.org para indicar que el contenido es de pago."
