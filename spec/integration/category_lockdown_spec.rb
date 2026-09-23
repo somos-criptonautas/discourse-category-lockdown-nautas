@@ -91,6 +91,12 @@ RSpec.describe "CategoryLockdown", type: :request do
       context "with category_lockdown_allow_crawlers enabled" do
         before { SiteSetting.category_lockdown_allow_crawlers = true }
 
+        it "refuses an unverified crawler ip when verification is required" do
+          SiteSetting.category_lockdown_crawler_require_verified_ip = true
+          get "/t/#{topic.slug}/#{topic.id}", headers: { "HTTP_USER_AGENT" => "Googlebot" }
+          expect(response).to redirect_to(category.url)
+        end
+
         it "injects the right markup" do
           get "/t/#{topic.slug}/#{topic.id}", headers: { "HTTP_USER_AGENT" => "Googlebot" }
           expect(response.body).to include(

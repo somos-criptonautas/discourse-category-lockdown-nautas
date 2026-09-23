@@ -47,6 +47,18 @@ RSpec.describe "CategoryLockdown query paths" do
     expect(member_posts).to include(post)
   end
 
+  it "keeps locked posts out of the author's public activity stream" do
+    UserActionManager.enable
+    other_post = Fabricate(:post, topic: topic, user: member)
+    UserActionManager.post_created(other_post)
+
+    stream = UserAction.stream(user_id: member.id, guardian: Guardian.new(outsider))
+    expect(stream.map(&:post_id)).not_to include(other_post.id)
+
+    own = UserAction.stream(user_id: member.id, guardian: Guardian.new(member))
+    expect(own.map(&:post_id)).to include(other_post.id)
+  end
+
   it "leaves unlocked categories alone" do
     other = Fabricate(:topic)
     other_post = Fabricate(:post, topic: other, raw: "aardvark public notes")

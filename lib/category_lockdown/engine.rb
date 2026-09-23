@@ -76,6 +76,20 @@ module ::CategoryLockdown
     locked_ids - permitted_ids
   end
 
+  # The crawler exemption deliberately serves locked content, so that search
+  # engines can index it behind the paywall metadata. use_crawler_layout? matches
+  # the User-Agent string and nothing else, which anyone can send, so on its own
+  # this exemption is advisory. Turning on the verified-ip setting additionally
+  # requires the request to come from an ASN in core's crawler_asns setting -
+  # which means crawler_asns must be populated, or nothing qualifies.
+  def self.crawler_exempt?
+    return false if !SiteSetting.category_lockdown_allow_crawlers
+    return false if !::RequestStore.store[:is_crawler]
+    return true if !SiteSetting.category_lockdown_crawler_require_verified_ip
+
+    ::CrawlerDetection.crawler_ip?(::RequestStore.store[:lockdown_request_ip])
+  end
+
   MAX_TEASER_PARTICIPANTS = 5
 
   # Distinct authors of the hidden replies, capped, plus how many there are in

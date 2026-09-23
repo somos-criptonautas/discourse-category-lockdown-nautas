@@ -53,6 +53,7 @@ after_initialize do
   # Query paths that build SQL directly and so never reach the Guardian override.
   ::Search.prepend ::CategoryLockdown::SearchExtension
   ::LatestPostsQuery.prepend ::CategoryLockdown::LatestPostsQueryExtension
+  ::UserAction.singleton_class.prepend ::CategoryLockdown::UserActionExtension
 
   register_category_custom_field_type("lockdown_whisper_replies", :boolean)
   ::Site.preloaded_category_custom_fields << "lockdown_whisper_replies"

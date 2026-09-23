@@ -15,7 +15,7 @@ class CategoryLockdown::CrawlerHtmlBuilder
 
   def should_inject_html?
     unless controller.instance_of?(::TopicsController) && SiteSetting.category_lockdown_enabled &&
-             SiteSetting.category_lockdown_allow_crawlers && ::RequestStore.store[:is_crawler]
+             ::CategoryLockdown.crawler_exempt?
       return false
     end
 
