@@ -8,6 +8,7 @@ RSpec.describe "CategoryLockdown whisper replies" do
   fab!(:op) { Fabricate(:post, topic: topic) }
   fab!(:subscriber) { Fabricate(:user, groups: [subscribers]) }
   fab!(:outsider) { Fabricate(:user) }
+  fab!(:instructor) { Fabricate(:admin) }
 
   before do
     SiteSetting.category_lockdown_enabled = true
@@ -32,7 +33,7 @@ RSpec.describe "CategoryLockdown whisper replies" do
     it "leaves the first post of a new topic public" do
       new_topic =
         PostCreator.create!(
-          subscriber,
+          instructor,
           category: category.id,
           title: "A brand new lesson here",
           raw: "the lesson body",
