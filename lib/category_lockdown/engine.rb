@@ -47,6 +47,35 @@ module ::CategoryLockdown
     whisper_replies?(topic.category)
   end
 
+  # Categories this guardian may not read, for the query paths that never call
+  # can_see_post?. Search and the latest-posts firehose build SQL directly and
+  # filter only on categories.read_restricted, which a lockdown category is not
+  # - that is the whole point of it - so their posts would otherwise be readable
+  # by anyone. Fails closed: with no user, every locked category is excluded.
+  #
+  # Slightly broader than is_locked, which exempts a category's own description
+  # topic. Excluding that topic from search too is the safe direction.
+  def self.locked_category_ids(guardian)
+    return [] if !SiteSetting.category_lockdown_enabled
+    return [] if guardian&.is_admin?
+
+    locked_ids =
+      ::CategoryCustomField.where(name: "lockdown_enabled", value: %w[true t]).pluck(:category_id)
+    return [] if locked_ids.empty?
+
+    group_names = guardian&.user&.groups&.pluck(:name) || []
+    return locked_ids if group_names.empty?
+
+    permitted_ids =
+      ::CategoryCustomField
+        .where(name: "lockdown_allowed_groups", category_id: locked_ids)
+        .pluck(:category_id, :value)
+        .select { |_id, value| (value.to_s.split(",") & group_names).any? }
+        .map(&:first)
+
+    locked_ids - permitted_ids
+  end
+
   MAX_TEASER_PARTICIPANTS = 5
 
   # Distinct authors of the hidden replies, capped, plus how many there are in
