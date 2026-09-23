@@ -84,4 +84,16 @@ after_initialize do
   ) do
     ::Post.where(topic_id: object.topic.id, post_type: Post.types[:whisper], hidden: false).count
   end
+
+  # Who is taking part, for social proof alongside the count. Identity is a
+  # smaller disclosure than the replies themselves, but it is not nothing: it
+  # reveals who is enrolled. Names only, never any part of what they wrote.
+  add_to_serializer(
+    :topic_view,
+    :lockdown_hidden_reply_participants,
+    include_condition: -> do
+      SiteSetting.category_lockdown_enabled && !scope.user&.whisperer? &&
+        ::CategoryLockdown.whisper_replies?(object.topic&.category)
+    end,
+  ) { ::CategoryLockdown.hidden_reply_participants(object.topic) }
 end

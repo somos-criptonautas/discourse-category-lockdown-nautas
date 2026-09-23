@@ -90,6 +90,26 @@ RSpec.describe "CategoryLockdown whisper replies" do
         )
       expect(as_subscriber.include_lockdown_hidden_reply_count?).to eq(false)
     end
+
+    it "names the participants without exposing what they wrote" do
+      other_member = Fabricate(:user, groups: [subscribers])
+      reply_as(subscriber, raw: "a secret question about the lesson")
+      reply_as(other_member, raw: "another secret question")
+
+      participants =
+        TopicViewSerializer.new(
+          TopicView.new(topic, outsider),
+          scope: Guardian.new(outsider),
+          root: false,
+        ).lockdown_hidden_reply_participants
+
+      expect(participants[:total]).to eq(2)
+      expect(participants[:users].map { |u| u[:username] }).to contain_exactly(
+        subscriber.username,
+        other_member.username,
+      )
+      expect(participants.to_s).not_to include("secret")
+    end
   end
 
   context "when the category does not have it enabled" do

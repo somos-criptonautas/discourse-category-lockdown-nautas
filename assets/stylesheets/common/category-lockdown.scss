@@ -42,4 +42,27 @@
     margin: 0.5em 0 0;
     color: var(--primary-high);
   }
+
+  &__participants {
+    margin: 0.25em 0 0;
+    color: var(--primary-high);
+  }
+
+  &__avatars {
+    display: flex;
+    margin-bottom: 0.75em;
+  }
+
+  &__avatar {
+    display: inline-flex;
+
+    + .lockdown-hidden-replies__avatar {
+      margin-left: -0.6em;
+    }
+
+    img.avatar {
+      border: 2px solid var(--secondary);
+      border-radius: 50%;
+    }
+  }
 }

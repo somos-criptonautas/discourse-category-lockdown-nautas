@@ -47,6 +47,28 @@ module ::CategoryLockdown
     whisper_replies?(topic.category)
   end
 
+  MAX_TEASER_PARTICIPANTS = 5
+
+  # Distinct authors of the hidden replies, capped, plus how many there are in
+  # total so the teaser can say "and N others". Two small queries on a topic
+  # page, run only for readers who are being shown the teaser.
+  def self.hidden_reply_participants(topic)
+    user_ids =
+      ::Post
+        .where(topic_id: topic.id, post_type: Post.types[:whisper], hidden: false)
+        .distinct
+        .pluck(:user_id)
+        .compact
+
+    users = ::User.real.where(id: user_ids.first(MAX_TEASER_PARTICIPANTS)).order(:id)
+
+    {
+      total: user_ids.size,
+      users:
+        users.map { |user| { username: user.username, avatar_template: user.avatar_template } },
+    }
+  end
+
   class NoAccessLocked < StandardError
   end
 end

@@ -10,5 +10,9 @@ en:
           one: "%{count} reply you can't see yet"
           other: "%{count} replies you can't see yet"
         body: "The discussion for this lesson is open to members. Join to read the questions and answers, and to ask your own."
+        participants:
+          zero: "%{names} are discussing this lesson."
+          one: "%{names} and 1 other are discussing this lesson."
+          other: "%{names} and %{count} others are discussing this lesson."
       lockdown_whisper_replies: "Keep replies private"
       lockdown_whisper_replies_help: "The first post of each topic stays public. Replies are created as whispers, readable only by members of the groups in the 'whispers allowed groups' site setting."
