@@ -8,12 +8,12 @@
 
 module ::CategoryLockdown::UserActionExtension
   def filter_categories(builder, guardian)
-    builder = super
+    scoped = super
 
     locked_ids = ::CategoryLockdown.locked_category_ids(guardian)
-    return builder if locked_ids.empty?
+    return scoped if locked_ids.empty?
 
-    builder.where(
+    scoped.where(
       "(c.id IS NULL OR c.id NOT IN (:lockdown_locked_ids))",
       lockdown_locked_ids: locked_ids,
     )
