@@ -15,4 +15,4 @@ es:
           one: "%{names} y 1 persona más están conversando sobre esta lección."
           other: "%{names} y %{count} personas más están conversando sobre esta lección."
       lockdown_whisper_replies: "Mantener las respuestas privadas"
-      lockdown_whisper_replies_help: "El inicio de cada historia sigue siendo público. Las respuestas se crean privadas: solo las leen los grupos del ajuste del sitio «grupos con permiso para susurrar»."
+      lockdown_whisper_replies_help: "El inicio de cada historia sigue siendo público. Las respuestas se crean privadas: solo las leen los «grupos con respuestas ocultas» del sitio."
