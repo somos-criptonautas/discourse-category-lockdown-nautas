@@ -1,5 +1,7 @@
 # discourse-category-lockdown-nautas
 
+**ENGLISH** | [ESPAÑOL](README.es.md)
+
 Lock down every topic in a category so that only members of specified groups can read
 them. Everyone else is redirected to the category's own description topic.
 
@@ -130,3 +132,9 @@ To pull upstream changes:
 git remote add upstream https://github.com/paviliondev/discourse-category-lockdown.git
 git fetch upstream
 ```
+
+## License
+
+GPL-2.0, inherited from upstream. See [LICENSE.txt](LICENSE.txt).
+
+Text of this README under [CC BY-NC-SA 4.0](CC-BY-NC-SA-4.0.txt).
