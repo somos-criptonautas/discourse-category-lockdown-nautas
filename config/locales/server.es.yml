@@ -1,8 +1,8 @@
 es:
   site_settings:
-    category_lockdown_enabled: "Activar discourse-category-lockdown."
-    category_lockdown_list_icon: "Ícono (fa-icon) junto a las historias bloqueadas."
-    category_lockdown_allow_crawlers: "Deja que los rastreadores lean el contenido bloqueado si «todos pueden ver» está activado. Se identifican solo por User-Agent, que cualquiera puede enviar: por sí sola es orientativa, no una restricción real."
-    category_lockdown_crawler_require_verified_ip: "Exige además que los rastreadores vengan de un ASN de «crawler asns». Cierra el bypass del User-Agent, pero ningún rastreador pasa hasta que «crawler asns» tenga valores."
-    category_lockdown_crawler_noarchive: "Agrega la metaetiqueta 'noarchive' para desactivar la caché de los buscadores."
-    category_lockdown_crawler_indicate_paywall: "Agrega metadatos de Schema.org que indican contenido de pago."
+    category_lockdown_enabled: "Activa el bloqueo de categorías. Cada categoría se configura en su pestaña de seguridad."
+    category_lockdown_list_icon: "Icono (fa-icon) que aparece junto a los temas bloqueados."
+    category_lockdown_allow_crawlers: "Deja que los buscadores lean el contenido bloqueado para poder indexarlo. Ojo: al buscador lo reconocemos solo por su User-Agent, y eso cualquiera lo puede falsificar."
+    category_lockdown_crawler_noarchive: "Añade la metaetiqueta 'noarchive' para que los buscadores no guarden una copia en caché."
+    category_lockdown_crawler_indicate_paywall: "Añade metadatos de Schema.org para avisar a los buscadores de que el contenido es de pago."
+    category_lockdown_crawler_require_verified_ip: "Exige además que la visita venga de una red (ASN) de «crawler asns». Cierra el agujero del User-Agent, pero mientras «crawler asns» esté vacío no pasa ningún buscador y nadie indexa nada."
