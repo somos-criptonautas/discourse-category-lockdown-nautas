@@ -2,6 +2,8 @@
 
 [ENGLISH](README.md) | **ESPAÑOL**
 
+Mantenido por Criptonautas. Sin afiliación ni respaldo de Discourse (Civilized Discourse Construction Kit, Inc.).
+
 Bloquea todos los temas de una categoría para que solo puedan leerlos los miembros de los grupos
 especificados. Todos los demás son redirigidos al tema de descripción de la propia categoría.
 

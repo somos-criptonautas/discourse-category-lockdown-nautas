@@ -2,6 +2,8 @@
 
 **ENGLISH** | [ESPAÑOL](README.es.md)
 
+Maintained by Criptonautas. Not affiliated with or endorsed by Discourse (Civilized Discourse Construction Kit, Inc.).
+
 Lock down every topic in a category so that only members of specified groups can read
 them. Everyone else is redirected to the category's own description topic.
 
