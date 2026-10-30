@@ -60,7 +60,10 @@ private category.
 Because the category stays readable, the query paths that build SQL directly do not see
 the plugin's `Guardian` override. Search, the `/posts.json` firehose and user activity
 streams are filtered explicitly (`Search`, `LatestPostsQuery`, `UserAction`), each with a
-regression spec. **If you add a feature that exposes post content through a new query
+regression spec. So are the other paths that show post content after checking only that
+the topic is visible: topic list RSS feeds (locked topics are left out) and excerpts,
+group activity and feeds, bookmarks, oneboxes, `/t/:id/excerpts`, similar topics and
+digests. **If you add a feature that exposes post content through a new query
 path, it will not be covered by the `Guardian` override — check it.**
 
 ### Keep replies private — public first post, private replies

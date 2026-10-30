@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # name: discourse-category-lockdown-nautas
 # about: Restrict a category to specified groups, redirecting everyone else to the category description topic
-# version: 1.3.0
+# version: 1.3.1
 # authors: Pavilion — Forked by Criptonautas
 # url: https://github.com/somos-criptonautas/discourse-category-lockdown-nautas
 
@@ -54,6 +54,17 @@ after_initialize do
   ::Search.prepend ::CategoryLockdown::SearchExtension
   ::LatestPostsQuery.prepend ::CategoryLockdown::LatestPostsQueryExtension
   ::UserAction.singleton_class.prepend ::CategoryLockdown::UserActionExtension
+  ::Group.prepend ::CategoryLockdown::GroupExtension
+  ::TopicBookmarkable.singleton_class.prepend ::CategoryLockdown::BookmarkableExtension
+  ::PostBookmarkable.singleton_class.prepend ::CategoryLockdown::BookmarkableExtension
+  ::Topic.singleton_class.prepend ::CategoryLockdown::TopicExtension
+
+  # Paths that render part of a post's content after checking only that the topic
+  # is visible.
+  ::ListController.prepend ::CategoryLockdown::TopicListExtension
+  ::TagsController.prepend ::CategoryLockdown::TopicListExtension
+  ::ListableTopicSerializer.prepend ::CategoryLockdown::ExcerptSerializerExtension
+  ::Oneboxer.singleton_class.prepend ::CategoryLockdown::OneboxerExtension
 
   register_category_custom_field_type("lockdown_whisper_replies", :boolean)
   ::Site.preloaded_category_custom_fields << "lockdown_whisper_replies"
