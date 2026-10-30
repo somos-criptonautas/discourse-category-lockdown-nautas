@@ -63,7 +63,8 @@ streams are filtered explicitly (`Search`, `LatestPostsQuery`, `UserAction`), ea
 regression spec. So are the other paths that show post content after checking only that
 the topic is visible: topic list RSS feeds (locked topics are left out) and excerpts,
 group activity and feeds, bookmarks, oneboxes, `/t/:id/excerpts`, similar topics and
-digests. **If you add a feature that exposes post content through a new query
+digests. `/topics/timings` also records nothing for a locked topic, so non-members can't
+earn read progress. **If you add a feature that exposes post content through a new query
 path, it will not be covered by the `Guardian` override — check it.**
 
 ### Keep replies private — public first post, private replies
