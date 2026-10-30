@@ -97,6 +97,14 @@ RSpec.describe "CategoryLockdown", type: :request do
           expect(response).to redirect_to(category.url)
         end
 
+        it "doesn't treat a browser asking for the print view as a crawler" do
+          browser =
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) " \
+              "Chrome/124.0 Safari/537.36"
+          get "/t/#{topic.slug}/#{topic.id}?print=true", headers: { "HTTP_USER_AGENT" => browser }
+          expect(response).to redirect_to(category.url)
+        end
+
         it "injects the right markup" do
           get "/t/#{topic.slug}/#{topic.id}", headers: { "HTTP_USER_AGENT" => "Googlebot" }
           expect(response.body).to include(

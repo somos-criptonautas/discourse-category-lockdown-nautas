@@ -11,11 +11,6 @@
 
 module ::CategoryLockdown::SearchExtension
   def posts_query(*args, **kwargs)
-    posts = super
-
-    locked_ids = ::CategoryLockdown.locked_category_ids(guardian)
-    return posts if locked_ids.empty?
-
-    posts.where("topics.category_id IS NULL OR topics.category_id NOT IN (?)", locked_ids)
+    ::CategoryLockdown.exclude_locked(super, guardian)
   end
 end

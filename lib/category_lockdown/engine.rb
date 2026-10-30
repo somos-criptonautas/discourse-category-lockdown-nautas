@@ -76,8 +76,16 @@ module ::CategoryLockdown
     locked_ids - permitted_ids
   end
 
+  # Narrows a relation that references topics to what this guardian may read.
+  def self.exclude_locked(relation, guardian, column: "topics.category_id")
+    locked_ids = locked_category_ids(guardian)
+    return relation if locked_ids.empty?
+
+    relation.where("#{column} IS NULL OR #{column} NOT IN (?)", locked_ids)
+  end
+
   # The crawler exemption deliberately serves locked content, so that search
-  # engines can index it behind the paywall metadata. use_crawler_layout? matches
+  # engines can index it behind the paywall metadata. CrawlerDetection matches
   # the User-Agent string and nothing else, which anyone can send, so on its own
   # this exemption is advisory. Turning on the verified-ip setting additionally
   # requires the request to come from an ASN in core's crawler_asns setting -

@@ -60,7 +60,10 @@ categoría privada.
 Como la categoría sigue siendo legible, las rutas de consulta que construyen SQL directamente no ven
 la sobrescritura de `Guardian` del plugin. La búsqueda, el flujo `/posts.json` y los flujos de
 actividad de usuario se filtran explícitamente (`Search`, `LatestPostsQuery`, `UserAction`), cada uno con una
-prueba de regresión. **Si añades una función que expone contenido de posts por una nueva ruta de consulta,
+prueba de regresión. También las demás rutas que muestran contenido de un post tras comprobar solo que
+el tema es visible: los feeds RSS de listas de temas (que omiten los temas bloqueados) y sus extractos,
+la actividad y los feeds de grupos, los marcadores, los oneboxes, `/t/:id/excerpts`, los temas
+similares y los resúmenes por correo. **Si añades una función que expone contenido de posts por una nueva ruta de consulta,
 la sobrescritura de `Guardian` no la cubrirá: compruébala.**
 
 ### Mantener respuestas privadas: primer post público, respuestas privadas
