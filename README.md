@@ -141,6 +141,6 @@ git fetch upstream
 
 ## License
 
-GPL-2.0, inherited from upstream. See [LICENSE.txt](LICENSE.txt).
+GPL-2.0, inherited from upstream. See [LICENSE.txt](LICENSE.txt). Original work by Pavilion; modified by Criptonautas since 2026, with every change in the git history.
 
-Text of this README under [CC BY-NC-SA 4.0](CC-BY-NC-SA-4.0.txt).
+Our additions to this README are under [CC BY-NC-SA 4.0](CC-BY-NC-SA-4.0.txt); text from the original project keeps its license.
